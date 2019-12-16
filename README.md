@@ -1,3 +1,18 @@
+# Notes on Darkvater fork #
+
+Armbian officially pulled the plug on debian jessie (and cubieboard) support back in November 2019. Unfortunately all the legacy images were also pruned with that so it is not possible to download sunxi-legacy kernel for the cubieboard. This is required if one wants to use on-board MMC card. This fork uses the last known version that supports the cubieboard and patches the build to support cubian.
+Usage is the same as the official build (see below), with two additional changes.
+* the private key for the local apt repo needs to be added. This is done with ```gpg --allow-secret-key-import --import packages/extras-buildpkgs/buildpkg.gpg```
+* as the armbian packages for jessie no longer exist they need to be compiled, use the ```EXTERNAL_NEW="compile"``` flag. Note that the docker flow doesn't support this, so you have to build it on the host
+
+**My Config**
+
+I did the following to compile my cubieboard with debian jessie
+```./compile.sh  BOARD="cubieboard" BRANCH="default" RELEASE="jessie" BUILD_MINIMAL="yes" BUILD_DESKTOP="no" KERNEL_CONFIGURE="no" KERNEL_ONLY="no" INSTALL_HEADERS="yes" COMPRESS_OUTPUTIMAGE="7z" SEVENZIP="yes" PROGRESS_LOG_TO_FILE="yes" BSPFREEZE="yes" EXTERNAL="yes" CLEAN_LEVEL="images" EXTERNAL_NEW="compile" EXTERNAL="yes"```
+
+Once this is done, the docker flow can be used as long as ```CLEAN_LEVEL``` is not set to "extras" which deletes the armbian packages that were just built previously. To use the docker flow, see for example below (assumes rebuild of kernel)
+```./compile.sh docker BOARD="cubieboard" BRANCH="default" RELEASE="jessie" BUILD_MINIMAL="yes" BUILD_DESKTOP="no" KERNEL_CONFIGURE="no" KERNEL_ONLY="no" INSTALL_HEADERS="yes" COMPRESS_OUTPUTIMAGE="7z" SEVENZIP="yes" PROGRESS_LOG_TO_FILE="yes" BSPFREEZE="yes" CLEAN_LEVEL="make,debs,oldcache"```
+
 # Armbian #
 
 Debian based Linux for ARM based single-board computers
