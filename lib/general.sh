@@ -165,6 +165,11 @@ create_sources_list()
 	;;
 	esac
 
+	if [[ $release == "jessie" ]]; then
+		sed -Ei "s|deb.*jessie-backports.*|deb http://archive.debian.org/debian/ jessie-backports main contrib non-free|" $basedir/etc/apt/sources.list
+		echo 'Acquire::Check-Valid-Until no;' >> $basedir/etc/apt/apt.conf.d/99no-check-valid-until
+	fi
+
 	# stage: add armbian repository and install key
 	if [[ $DOWNLOAD_MIRROR == "china" ]]; then
 		echo "deb http://mirrors.tuna.tsinghua.edu.cn/armbian $RELEASE main ${RELEASE}-utils ${RELEASE}-desktop" > $SDCARD/etc/apt/sources.list.d/armbian.list

@@ -162,7 +162,7 @@ PACKAGE_LIST="bc cpufrequtils device-tree-compiler fping fake-hwclock psmisc chr
 		nocache debconf-utils"
 
 # Non-essential packages for minimal build
-PACKAGE_LIST_ADDITIONAL="network-manager wireless-tools lsof htop mmc-utils wget nano sysstat net-tools resolvconf"
+PACKAGE_LIST_ADDITIONAL="network-manager wireless-tools lsof htop wget nano sysstat net-tools resolvconf"
 
 if [[ "$BUILD_MINIMAL" != "yes"  ]]; then
 	# Essential packages

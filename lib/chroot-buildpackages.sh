@@ -296,7 +296,7 @@ chroot_installpackages_local()
 	aptly -config=$conf repo add temp ${DEB_STORAGE}/extra/${RELEASE}-utils/
 	# -gpg-key="925644A6"
 	aptly -keyring="$SRC/packages/extras-buildpkgs/buildpkg-public.gpg" -secret-keyring="$SRC/packages/extras-buildpkgs/buildpkg.gpg" -batch=true -config=$conf \
-		 -gpg-key="925644A6" -passphrase="testkey1234" -component=temp -distribution=$RELEASE publish repo temp
+              -gpg-key="2E676174EEF176857052DE5392B90DE1925644A6" -passphrase="testkey1234" -component=temp -distribution=$RELEASE publish repo temp
 	aptly -config=$conf -listen=":8189" serve &
 	local aptly_pid=$!
 	cp $SRC/packages/extras-buildpkgs/buildpkg.key $SDCARD/tmp/buildpkg.key
